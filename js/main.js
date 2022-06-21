@@ -1,4 +1,4 @@
-const DESCRIPTION = [
+const photoDescriptions = [
   'На природе',
   'На море',
   'На улице',
@@ -7,7 +7,7 @@ const DESCRIPTION = [
   'С друзьями',
 ];
 
-const MESSAGE = [
+const userComments = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -16,7 +16,7 @@ const MESSAGE = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!',
 ];
 
-const NAMES = [
+const userNames = [
   'Иван',
   'Хуан Себастьян',
   'Мария',
@@ -35,38 +35,35 @@ const getRandomPositiveInteger = (a, b) => {
   return Math.floor(result);
 };
 
-const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
+const getRandomArrElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
-const createPhotoDescription = () => {
+const photoContentData = () => {
   const result = [];
 
   for (let i=1; i<=25; i++) {
-    const randomId = i;
-    const randomUrl = i;
     const likes = getRandomPositiveInteger(15, 200);
     const randomCommentId = getRandomPositiveInteger(1, Number.MAX_SAFE_INTEGER);
     const randomAvatar = getRandomPositiveInteger(1, 6);
 
-    const comments = [];
-    const userInformation = {
-      id: randomCommentId,
-      avatar: `img/avatar-${randomAvatar}.svg`,
-      message: getRandomArrayElement(MESSAGE),
-      name: getRandomArrayElement(NAMES),
-    };
-    comments.push(userInformation);
-
     result.push(
       {
-        id: randomId,
-        url: `photos/${randomUrl}.jpg`,
-        description: getRandomArrayElement(DESCRIPTION),
+        id: i,
+        url: `photos/${i}.jpg`,
+        description: getRandomArrElement(photoDescriptions),
         likes: likes,
-        comments,
+        comments: [
+          {
+            id: randomCommentId,
+            avatar: `img/avatar-${randomAvatar}.svg`,
+            message: getRandomArrElement(userComments),
+            name: getRandomArrElement(userNames),
+          },
+        ],
       }
     );
   }
 
   return result;
 };
-console.log(createPhotoDescription());
+
+photoContentData();
