@@ -35,35 +35,33 @@ const getRandomPositiveInteger = (a, b) => {
   return Math.floor(result);
 };
 
-const getRandomArrElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
+const getRandomArrayElement = (arr) => arr[getRandomPositiveInteger(0, arr.length - 1)];
 
-const photoContentData = () => {
-  const result = [];
+const createArrPhotoContentData = () => {
+  const photoContentData = [];
 
   for (let i=1; i<=25; i++) {
     const likes = getRandomPositiveInteger(15, 200);
-    const randomCommentId = getRandomPositiveInteger(1, Number.MAX_SAFE_INTEGER);
     const randomAvatar = getRandomPositiveInteger(1, 6);
 
-    result.push(
+    photoContentData.push(
       {
         id: i,
         url: `photos/${i}.jpg`,
-        description: getRandomArrElement(photoDescriptions),
+        description: getRandomArrayElement(photoDescriptions),
         likes: likes,
         comments: [
           {
-            id: randomCommentId,
+            id: i + 1,
             avatar: `img/avatar-${randomAvatar}.svg`,
-            message: getRandomArrElement(userComments),
-            name: getRandomArrElement(userNames),
+            message: getRandomArrayElement(userComments),
+            name: getRandomArrayElement(userNames),
           },
         ],
       }
     );
   }
-
-  return result;
+  return photoContentData;
 };
 
-photoContentData();
+createArrPhotoContentData();
